@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <title>User Registration</title>
+    <script>
+        function validata() {
+            var l = /[a-z]/g;
+            var u = /[A-Z]/g;
+            var num = /[0-9]/g;
+
+            var n=['ABCsdgkfg','DEFsfgsd','GFDdfgs'];
+			var flag;
+			flag = 1;
+            var special = /[!@#$%^&*]/g;
+            if(flag == 1){
+
+           
+            if(document.getElementById("Name").value.length<5 || document.getElementById("Name").value.length>15) {
+                flag++;
+                alert("Name should be atleast minmum 5 letters and maximum 15 letters");
+            }
+			
+          else if(!document.getElementById("passwd").value.match(l) || !document.getElementById("passwd").value.match(u) || !document.getElementById("passwd").value.match(num) || !document.getElementById("passwd").value.match(special)) {
+                flag++;
+                alert("Please use Numbers,Alphabets,Lowercase,Uppercase and Special characters");
+            }
+
+            else if(!document.getElementById("email").value.match(/[a-z A-Z 0-9]+[@]+[a-z]+[.]+[a-z]/)) {
+                flag++;
+                alert("The entered Email id is not valid.");
+            }
+
+         else if(document.getElementById("mobile").value.length!=10) {
+                flag++;
+                alert("Contact details should have 10 numbers");
+            }
+
+		  else( flag == 1)
+            {
+				for(let i =0; i<n.length; i++)
+				{ 
+					if(document.getElementById("Name").value == n[i]){
+                        flag++;
+						alert('The given username has already been taken');
+					}
+				}
+                
+                
+            }
+		
+        }
+            if(flag == 1)
+            {	
+                document.getElementById("print").innerHTML="successfully registered";
+				alert('Successfully Registered');
+            }
+        }
+
+    </script>
+</head>
+<body>
+    <div class="w3-container w3-teal">
+        <h1>Horoscope App</h1>
+      </div>
+    <div class="container">
+        <form id="adduser" >
+                Name<br>
+                <input type="text" id="Name"><br>
+                Password<br>
+                <input type="password" id="passwd" ><br>
+                E-mail <br>
+                <input type="text" id="email"><br>
+                Birthday<br>
+                <input type="date" id="birthday" ><br>
+                Day of Birth<br>
+                <select name="day" id="day">
+                    <option value="Mon">Monday</option>
+                    <option value="Tuesday">Tuesday</option>
+                    <option value="Wednesday">Wednesday</option>
+                    <option value="Thursday">Thursday</option>
+                    <option value="Friday">Friday</option>
+                    <option value="Saturday">Saturday</option>
+
+                  </select><br>
+                  Gender<br>
+                  <input type="radio" id="male" name="gender" value="male">
+                  <label for="male">Male</label><br>
+                  <input type="radio" id="female" name="gender" value="female">
+                  <label for="female">Female</label><br>
+                  <input type="radio" id="other" name="gender" value="other">
+                  <label for="other">Other</label>
+                
+                  <br>  
+                
+                  <p>Please select your age:</p>
+                  <input type="radio" id="age1" name="age" value="30">
+                  <label for="age1">0 - 10</label><br>
+                  <input type="radio" id="age1" name="age" value="30">
+                  <label for="age1">11 - 20</label><br>
+                  <input type="radio" id="age1" name="age" value="30">
+                  <label for="age1">20 - 30</label><br>
+                  <input type="radio" id="age1" name="age" value="30">
+                  <label for="age1">30 - 40</label><br>
+                  <input type="radio" id="age2" name="age" value="60">
+                  <label for="age2">40 - 50</label><br>  
+                  <input type="radio" id="age3" name="age" value="100">
+                  <label for="age3">60 -100 </label><br>
+                Contact<br>
+                <input type="text" id="mobile"><br>
+
+                Submit<br>
+                <input type="submit" onclick="validata()"><br>
+                <p id="print"></p>
+  
+              </form> 
+   
+    
+</div>
+    
+</body>
+</html>

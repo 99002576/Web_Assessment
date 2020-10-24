@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Student Record System</title>
+ <script src="../studentdata.js"></script>
+ <script src="./lib/jquery.js"></script>
+ 
+ <script>
+
+ 
+ function onAddClick()
+ {
+    $("#div1").hide()
+     $("#div2").hide()
+     $("#div3").show()   
+ }
+ let mang = new empManager();
+    function init(){
+    $("#div1").hide()
+     $("#div2").hide()
+     $("#div3").hide() 
+     mang.addStudent(new Student(101,"Sasy","Hyderbad"))
+     mang.addStudent(new Student(102,"ABC","Bangalore"))
+     mang.addStudent(new  Student(103,"DEF","Hyderbad"))
+ }
+ 
+
+ function onaddStudent(){
+    
+    let id=$("#newId").val();
+    let name=$("#newName").val();
+    let address=$("#newAddress").val();
+    let emp=new Student(id,name,address)
+    mang.addStudent(emp)
+   $("#newId").val("")
+    $("#newName").val("")
+    $("#newAddress").val("")
+    alert("One Student record successfully added");
+ }
+ function updateRecord(){
+    let id = $("#stuId").text();
+            let name = $("#stuName").val();
+            let address = $("#stuAdd").val();
+            let emp = new Student(id, name, address)
+            try {
+                mang.updateStudent(emp);
+                alert("One record updated successfully!!!!");                
+            } catch (error) {
+                alert(error.message);
+            }            
+ }
+ function fillRecords(){
+    $("#div1").hide()
+     $("#div2").hide()
+     $("#div3").hide()
+     let heading=`<tr><th>Student ID</th><th>Student Name</th><th>Student Address</th><th>Options</th>`;
+      $("#tblRecords").html(heading);
+        $("#div1").show()
+        let data=mang.getAll()
+        data.forEach(emp => {
+           let row = `<tr><td>${emp.stuId}</td><td>${emp.stuName}</td><td>${emp.stuAdd}</td><td><button class="edit" sid="${emp.stuId}">Edit</button>   <button class="del" sid="${emp.stuId}">X</button></td>`;
+            document.getElementById("tblRecords").innerHTML+=row; 
+            $(".edit").click(function () {
+               var selectedId= $(this).attr("sid");
+               let empObj = mang.findStudent(selectedId);
+                    $("#stuId").text(empObj.stuId);
+                    $("#stuName").val(empObj.stuName);
+                    $("#stuAdd").val(empObj.stuAdd);
+                    $("#div1").hide()
+                    $("#div2").show()
+                    $("#div3").hide()
+               });
+               $(".del").click(function () {
+               var selectedId= $(this).attr("sid");
+               if(confirm("Do you want to delete the selected record"))
+                   {
+                       mang.deleteStudent(selectedId); 
+                       fillRecords();
+                   }
+                   else
+                   {
+                    $("#div1").hide()
+                    $("#div2").hide()
+                    $("#div3").hide()
+                   }
+               });
+            
+        })
+        
+    }
+  $(document).ready(init);
+</script>
+</head>
+<body>
+ <header>
+ <nav>
+    <a href="#" onclick="fillRecords()">View All</a>
+    <a href="#" onclick="onAddClick()">New Student</a>
+    <a href="#" onclick="">About Us</a>
+ </nav>
+ </header>
+ <section>
+ <div id="div1">
+ <h2>List of Students with Us!!!!</h2>
+ <table id="tblRecords" border="1" width="35%">
+ 
+ </table>
+ </div>
+ <div id="div2">
+ <h2>Edit the Details of the Student</h2>
+ <p>Student ID: <span id="stuId"></span> </p>
+ <p>Student Name: <input type="text" id="stuName"></p> 
+ <p>Student Address: <input type="text" id="stuAdd"></p>
+ <p><button onclick="updateRecord()">Update Record</button></p> 
+ </div>
+ <div id="div3">
+ <h2>Add the Details of the Student</h2>
+ <p>Student ID: <input type="number" id="stuId"> </p>
+ <p>Student Name: <input type="text" id="stuName"></p>
+ <p>Student Address: <input type="text" id="stuAddress"></p>
+ <p><button onclick="onaddStudent()">Add Student</button></p>
+ </div> 
+ </section>
+ 
+</body>
+</html>
